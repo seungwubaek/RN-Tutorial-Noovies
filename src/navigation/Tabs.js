@@ -16,13 +16,14 @@ const Tabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.tabBarBackground,
-        },
-        headerTitleStyle: {
-          color: colors.tabBarLabel,
-        },
-        headerTitleAlign: 'center',
+        headerShown: false,
+        // headerStyle: {
+        //   backgroundColor: colors.tabBarBackground,
+        // },
+        // headerTitleStyle: {
+        //   color: colors.tabBarLabel,
+        // },
+        // headerTitleAlign: 'center',
         tabBarStyle: {
           backgroundColor: colors.tabBarBackground,
         },
