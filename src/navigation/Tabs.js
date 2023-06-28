@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
-  const {colors} = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Tab.Navigator
@@ -25,10 +25,10 @@ const Tabs = () => {
         // },
         // headerTitleAlign: 'center',
         tabBarStyle: {
-          backgroundColor: colors.tabBarBackground,
+          backgroundColor: theme.tabBarBackground,
         },
-        tabBarActiveTintColor: colors.tabBarLabel,
-        tabBarInactiveTintColor: colors.tabBarLabelInactive,
+        tabBarActiveTintColor: theme.tabBarLabel,
+        tabBarInactiveTintColor: theme.tabBarLabelInactive,
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: 500,
