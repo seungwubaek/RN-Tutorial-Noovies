@@ -7,9 +7,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemeProvider } from 'styled-components/native';
 
-import Root from './src/navigation/Root';
+import Root from '~/navigations/Root';
 
-import defaultTheme, { darkTheme } from './src/styles/themes';
+import lightTheme, { darkTheme } from '~/styles/themes';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,7 +41,7 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : defaultTheme}>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <NavigationContainer>
         <View onLayout={onLayoutRootView} style={{flex: 1}}>
           <Root />

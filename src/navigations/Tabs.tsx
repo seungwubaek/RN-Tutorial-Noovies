@@ -1,12 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import Movies from '../screens/Movies';
-import Tv from '../screens/Tv';
-import Search from '../screens/Search';
+import Movies from '~/screens/Movies';
+import Tv from '~/screens/Tv';
+import Search from '~/screens/Search';
 
-import { useTheme } from './../hooks/theme';
 import { Ionicons } from '@expo/vector-icons';
+
+import { useTheme } from '~/hooks/theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,6 +16,9 @@ const Tabs = () => {
 
   return (
     <Tab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: theme.mainBackground,
+      }}
       screenOptions={{
         headerShown: false,
         // headerStyle: {
@@ -31,7 +35,7 @@ const Tabs = () => {
         tabBarInactiveTintColor: theme.tabBarLabelInactive,
         tabBarLabelStyle: {
           fontSize: 12,
-          fontWeight: 500,
+          fontWeight: '500',
         },
       }}
     >
