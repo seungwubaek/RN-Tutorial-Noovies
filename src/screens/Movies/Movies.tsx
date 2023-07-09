@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, RefreshControl } from 'react-native';
 import { ActivityIndicator, useColorScheme } from 'react-native';
 import Swiper from 'react-native-swiper';
 
@@ -38,11 +38,18 @@ const getAsyncJsonData = async (apiFunc: Function, stateSetter: Function) => {
 }
 
 const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { navigate }}) => {
+  const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [nowPlaying, setNowPlaying] = useState([]);
   const [upComing, setUpcoming] = useState([]);
   const [trending, setTrending] = useState([]);
   const isDark = useColorScheme() === 'dark';
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchAllData();
+    setRefreshing(false);
+  }, []);
 
   const getAsyncJsonData = useCallback(async (apiFunc: Function, stateSetter: Function) => {
     var resp = await apiFunc();
@@ -66,7 +73,14 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
       <ActivityIndicator />
     </Loader>
   ) : (
-    <StyledScrollView>
+    <StyledScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    >
       <Swiper
         autoplay={true}
         loop={true}
