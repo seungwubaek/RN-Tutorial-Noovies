@@ -10,12 +10,12 @@ module.exports = function(api) {
           extensions: [
             '.ios.ts',
             '.android.ts',
-            '.ts',
             '.ios.tsx',
             '.android.tsx',
+            '.ts',
             '.tsx',
-            '.jsx',
             '.js',
+            '.jsx',
             '.json',
           ],
           alias: {
