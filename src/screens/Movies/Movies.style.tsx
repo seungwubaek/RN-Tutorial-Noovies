@@ -14,7 +14,7 @@ export const ListContainer = styled.View`
 `;
 
 export const ListTitle = styled.Text`
-  color: white;
+  color: ${({theme}) => theme.mainText};
   font-size: 16px;
   font-weight: 600;
   margin-left: 20px;
