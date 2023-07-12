@@ -4,8 +4,9 @@ import { ActivityIndicator, useColorScheme } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 // Components
-import Slide from '~/components/MovieSwiperSlide';
-import Poster from '~/components/Poster';
+import Slide from '~/components/organisms/MovieSwiperSlide';
+import VMedia from '~/components/organisms/VMedia';
+import HMedia from '~/components/organisms/HMedia';
 
 // Scripts
 import { getNowPlaying, getTrending, getUpcoming } from '~/apis/movie';
@@ -16,14 +17,7 @@ import {
   StyledScrollView,
   ListTitle,
   TrendingScrollView,
-  Movie,
-  Title,
-  Votes,
   ListContainer,
-  HMovie,
-  HColumn,
-  Overview,
-  ComingSoonReleaseDate,
 } from './Movies.style';
 
 // Types
@@ -113,11 +107,12 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
         >
           {
             trending.map((movie: any) =>
-              <Movie key={movie.id}>
-                <Poster path={movie.poster_path} />
-                <Title numberOfLines={1} posterWidth>{movie.original_title}</Title>
-                <Votes posterWidth>{movie.vote_average > 0 ? `⭐ ${movie.vote_average}/10` : `Coming Soon`}</Votes>
-              </Movie>
+              <VMedia
+                key={movie.id}
+                posterPath={movie.poster_path}
+                originalTitle={movie.original_title}
+                voteAverage={movie.vote_average}
+              />
             )
           }
         </TrendingScrollView>
@@ -127,14 +122,13 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
         {
           upComing.map((movie: any) => {
             return (
-              <HMovie key={movie.id}>
-                <Poster path={movie.poster_path} />
-                <HColumn>
-                  <Title posterWidth={false}>{movie.original_title}</Title>
-                  <ComingSoonReleaseDate>{new Date(movie.release_date).toLocaleDateString('ko', {year: 'numeric', month: 'long', day: 'numeric'})}</ComingSoonReleaseDate>
-                  <Overview numberOfLines={3}>{movie.overview}</Overview>
-                </HColumn>
-              </HMovie>
+              <HMedia
+                key={movie.id}
+                posterPath={movie.poster_path}
+                originalTitle={movie.original_title}
+                overview={movie.overview}
+                releaseDate={movie.release_date}
+              />
             )
           })
         }

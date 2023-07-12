@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, useColorScheme } from 'react-native';
 
 // Components
-import Poster from '~/components/Poster';
+import Poster from '~/components/molecules/Poster';
 
 // Scripts
 import { makeImgPath } from '~/helpers/movie/path';
