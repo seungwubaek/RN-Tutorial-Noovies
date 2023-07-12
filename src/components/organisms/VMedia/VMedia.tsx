@@ -27,8 +27,7 @@ const VMedia: React.FC<VMediaProps> = ({
       numberOfLines={1}
       posterWidth={true}
     >
-      {originalTitle.slice(0, 13)}
-      {originalTitle.length > 13 ? '...' : null}
+      {originalTitle}
     </StTextMoviePosterTitle>
     <Votes voteAverage={voteAverage} />
   </Movie>
