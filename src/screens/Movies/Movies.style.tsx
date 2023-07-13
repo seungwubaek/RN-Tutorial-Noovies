@@ -9,6 +9,8 @@ export const StyledScrollView = styled.ScrollView`
   flex: 1;
 `;
 
+export const StFlatListContainer = styled.FlatList``;
+
 export const ListContainer = styled.View`
   margin-bottom: 40px;
 `;
@@ -23,4 +25,6 @@ export const ListTitle = styled.Text`
 
 // Trending
 
-export const TrendingScrollView = styled.ScrollView``;
+export const StFlatListTrending = styled.FlatList``;
+
+export const StFlatListUpcoming = styled.FlatList``;

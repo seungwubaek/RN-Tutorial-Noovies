@@ -6,7 +6,6 @@ import Votes from '~/components/molecules/Votes';
 import { StTextMoviePosterTitle } from '~/components/molecules/Poster/Poster.style';
 
 const Movie = styled.View`
-  margin-right: 20px;
   align-items: center;
 `;
 

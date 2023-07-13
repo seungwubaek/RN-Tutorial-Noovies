@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, useColorScheme } from 'react-native';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useAssets } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -9,7 +9,7 @@ import { ThemeProvider } from 'styled-components/native';
 
 import Root from '~/navigations/Root';
 
-import lightTheme, { darkTheme } from '~/styles/themes';
+import darkTheme from '~/styles/themes';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,7 +19,6 @@ export default function App() {
   const [assets, error] = useAssets([
     'https://avatars.githubusercontent.com/u/22609242?v=4',
   ]);
-  const isDark = useColorScheme() === 'dark';
 
   useEffect(() => {
     if (fontsLoaded && assets) {
@@ -41,7 +40,7 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+    <ThemeProvider theme={darkTheme}>
       <NavigationContainer>
         <View onLayout={onLayoutRootView} style={{flex: 1}}>
           <Root />

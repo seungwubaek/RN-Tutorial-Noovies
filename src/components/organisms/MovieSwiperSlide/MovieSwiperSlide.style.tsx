@@ -8,7 +8,7 @@ export const SwiperItem = styled.View`
   height: 100%;
 `;
 
-export const StyledImageBackground = styled.Image`
+export const StImageBackground = styled.Image`
   width: 100%;
   height: 100%;
   position: absolute;
