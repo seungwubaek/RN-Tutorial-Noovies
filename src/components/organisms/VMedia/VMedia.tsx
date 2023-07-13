@@ -10,7 +10,7 @@ const Movie = styled.View`
 `;
 
 interface VMediaProps {
-  posterPath: string;
+  posterPath: string | null;
   originalTitle: string;
   voteAverage: number;
 }

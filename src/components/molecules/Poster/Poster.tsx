@@ -7,7 +7,7 @@ import { makeImgPath } from '~/helpers/movie/path';
 import { PosterImage } from './Poster.style';
 
 interface PosterProps {
-  path: string;
+  path: string | null;
 }
 
 const Poster: React.FC<PosterProps> = ({path}) => {

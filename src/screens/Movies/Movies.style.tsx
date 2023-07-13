@@ -1,3 +1,6 @@
+import {
+  FlatList,
+} from 'react-native';
 import styled from 'styled-components/native';
 
 export const Loader = styled.View`
@@ -9,7 +12,7 @@ export const StyledScrollView = styled.ScrollView`
   flex: 1;
 `;
 
-export const StFlatListContainer = styled.FlatList``;
+export const StFlatListContainer = styled.FlatList`` as typeof FlatList;
 
 export const ListContainer = styled.View`
   margin-bottom: 40px;
@@ -22,9 +25,3 @@ export const ListTitle = styled.Text`
   margin-left: 20px;
   margin-bottom: 20px;
 `;
-
-// Trending
-
-export const StFlatListTrending = styled.FlatList``;
-
-export const StFlatListUpcoming = styled.FlatList``;

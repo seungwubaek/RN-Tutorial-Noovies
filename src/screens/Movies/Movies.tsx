@@ -1,31 +1,34 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   Dimensions,
-  RefreshControl,
+  FlatList,
+  ListRenderItem,
 } from 'react-native';
 import { ActivityIndicator, useColorScheme, View, Text } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
+import { useQuery } from '@tanstack/react-query';
 
 // Components
 import Slide from '~/components/organisms/MovieSwiperSlide';
 import VMedia from '~/components/organisms/VMedia';
 import HMedia from '~/components/organisms/HMedia';
 
-// Scripts
-import { getNowPlaying, getTrending, getUpcoming } from '~/apis/movie';
+// Apis
+import movieApi from '~/apis/movie';
 
 // Styles
 import {
   Loader,
   ListTitle,
   ListContainer,
-  StFlatListTrending,
-  StFlatListUpcoming,
   StFlatListContainer,
 } from './Movies.style';
 
 // Types
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { HSeperator } from '~/components/molecules/HSeperator';
+import { VSeperator } from '~/components/molecules/VSeperator';
+import { Movie, MovieResponse } from '~/apis/response';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
@@ -36,41 +39,62 @@ const getAsyncJsonData = async (apiFunc: Function, stateSetter: Function) => {
 }
 
 const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { navigate }}) => {
-  const [refreshing, setRefreshing] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [nowPlaying, setNowPlaying] = useState([]);
-  const [upComing, setUpcoming] = useState([]);
-  const [trending, setTrending] = useState([]);
-  const isDark = useColorScheme() === 'dark';
+  const {
+    isLoading: nowPlayingLoading,
+    data: nowPlayingData,
+    refetch: refetchNowPlaying,
+    isRefetching: isRefetchingNowPlaying,
+  } = useQuery<MovieResponse>(['movie', 'nowPlaying'], movieApi.getNowPlaying);
+
+  const {
+    isLoading: upcomingLoading,
+    data: upcomingData,
+    refetch: refetchUpcoming,
+    isRefetching: isRefetchingUpcoming,
+  } = useQuery<MovieResponse>(['movie', 'upcoming'], movieApi.getUpcoming);
+
+  const {
+    isLoading: trendingLoading,
+    data: trendingData,
+    refetch: refetchTrending,
+    isRefetching: isRefetchingTrending,
+  } = useQuery<MovieResponse>(['movie', 'trending'], movieApi.getTrending);
+
 
   const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    await fetchAllData();
-    setRefreshing(false);
+    refetchNowPlaying();
+    refetchUpcoming();
+    refetchTrending();
   }, []);
 
-  const getAsyncJsonData = useCallback(async (apiFunc: Function, stateSetter: Function) => {
-    var resp = await apiFunc();
-    var { results } = await resp.json();
-    stateSetter(results);
-  }, []);
+  const renderVMedia = useCallback<ListRenderItem<Movie>>(({ item }) => (
+    <VMedia
+      posterPath={item.poster_path}
+      originalTitle={item.original_title}
+      voteAverage={item.vote_average}
+    />
+  ), []);
 
-  const fetchAllData = useCallback(async () => {
-    await getAsyncJsonData(getNowPlaying, setNowPlaying);
-    await getAsyncJsonData(getUpcoming, setUpcoming);
-    await getAsyncJsonData(getTrending, setTrending);
-    setLoading(false);
-  }, []);
+  const renderHMedia = useCallback<ListRenderItem<Movie>>(({ item }) => (
+    <HMedia
+      posterPath={item.poster_path}
+      originalTitle={item.original_title}
+      overview={item.overview}
+      releaseDate={item.release_date}
+    />
+  ), []);
 
-  useEffect(() => {
-    fetchAllData();
-  }, []);
+  const movieKeyExtractor = useCallback((item: Movie) => item.id.toString(), []);
+
+  const loading = nowPlayingLoading || upcomingLoading || trendingLoading;
+  const refreshing = isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending;
 
   return loading ? (
     <Loader>
       <ActivityIndicator />
     </Loader>
   ) : (
+    (nowPlayingData && upcomingData && trendingData) ?
     <StFlatListContainer
       refreshing={refreshing}
       onRefresh={onRefresh}
@@ -84,9 +108,10 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
             marginBottom: 30,
           }}
           showPagination={false}
-          data={nowPlaying}
-          renderItem={({ item }: { item: any }) => (
-            <Slide key={item.id}
+          data={nowPlayingData.results}
+          keyExtractor={movieKeyExtractor}
+          renderItem={({ item }) => (
+            <Slide
               backdropPath={item.backdrop_path}
               posterPath={item.poster_path}
               originalTitle={item.original_title}
@@ -97,36 +122,25 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
         />
         <ListContainer>
           <ListTitle>Trending Movies</ListTitle>
-          <StFlatListTrending
-            data={trending}
+          <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            keyExtractor={(item: any) => item.id.toString()}
             contentContainerStyle={{ paddingLeft: 30, paddingRight: 20 }}
-            ItemSeparatorComponent={() => <View style={{ width: 20 }}></View>}
-            renderItem={({ item }: { item: any }) => (
-              <VMedia
-                posterPath={item.poster_path}
-                originalTitle={item.original_title}
-                voteAverage={item.vote_average}
-              />
-            )}
+            ItemSeparatorComponent={HSeperator}
+            data={trendingData.results}
+            keyExtractor={movieKeyExtractor}
+            renderItem={renderVMedia}
           />
         </ListContainer>
         <ListTitle>Coming Soon</ListTitle>
       </>}
-      data={upComing}
-      keyExtractor={(item: any) => item.id.toString()}
-      ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
-      renderItem={({ item }: { item: any }) => (
-        <HMedia
-          posterPath={item.poster_path}
-          originalTitle={item.original_title}
-          overview={item.overview}
-          releaseDate={item.release_date}
-        />
-      )}
+      ItemSeparatorComponent={VSeperator}
+      data={upcomingData?.results || []}
+      keyExtractor={movieKeyExtractor}
+      renderItem={renderHMedia}
     />
+    :
+    null
   )
 }
 

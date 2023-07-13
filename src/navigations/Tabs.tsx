@@ -20,6 +20,7 @@ const Tabs = () => {
         backgroundColor: theme.mainBackground,
       }}
       screenOptions={{
+        unmountOnBlur: true,
         headerShown: false,
         // headerStyle: {
         //   backgroundColor: colors.tabBarBackground,

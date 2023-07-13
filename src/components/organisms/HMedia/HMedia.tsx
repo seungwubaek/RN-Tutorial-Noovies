@@ -13,7 +13,7 @@ import {
 } from './HMedia.style';
 
 interface HMediaProps {
-  posterPath: string;
+  posterPath: string | null;
   originalTitle: string;
   overview: string;
   releaseDate?: string;

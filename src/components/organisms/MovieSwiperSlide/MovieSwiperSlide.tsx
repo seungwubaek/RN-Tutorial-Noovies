@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, useColorScheme } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 
 // Components
@@ -38,8 +38,6 @@ const Slide: React.FC<SlideProps> = ({
   voteAverage,
   overview,
  }) => {
-  const isDark = useColorScheme() === 'dark';
-
   return (
     <SwiperItem>
       <StImageBackground
