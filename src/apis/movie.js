@@ -53,7 +53,7 @@ const getNowPlaying = async () => {
 
 const getTrending = async () => {
   return fetch(
-    `${BASE_URL}/trending/movie/week?language=ko-KR&page=1&region=KR&api_key=${API_KEY}`,
+    `${BASE_URL}/trending/movie/week?language=ko-KR&api_key=${API_KEY}`,
     {
       method: 'GET',
       headers: {

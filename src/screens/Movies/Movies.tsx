@@ -9,6 +9,7 @@ import SwiperFlatList from 'react-native-swiper-flatlist';
 import { useQuery } from '@tanstack/react-query';
 
 // Components
+import Loader from '~/components/organisms/Loader';
 import Slide from '~/components/organisms/MovieSwiperSlide';
 import VMedia from '~/components/organisms/VMedia';
 import HMedia from '~/components/organisms/HMedia';
@@ -18,7 +19,6 @@ import movieApi from '~/apis/movie';
 
 // Styles
 import {
-  Loader,
   ListTitle,
   ListContainer,
   StFlatListContainer,
@@ -90,9 +90,7 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
   const refreshing = isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending;
 
   return loading ? (
-    <Loader>
-      <ActivityIndicator />
-    </Loader>
+    <Loader />
   ) : (
     (nowPlayingData && upcomingData && trendingData) ?
     <StFlatListContainer
