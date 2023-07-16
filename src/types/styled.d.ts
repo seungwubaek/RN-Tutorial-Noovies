@@ -2,6 +2,9 @@ import 'styled-components/native'
 
 declare module 'styled-components/native' {
   export interface DefaultTheme {
+    mode: string;
+    headerBackground: string;
+    headerText: string;
     tabBarBackground: string;
     tabBarLabel: string;
     tabBarLabelInactive: string;

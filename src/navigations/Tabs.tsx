@@ -21,14 +21,14 @@ const Tabs = () => {
       }}
       screenOptions={{
         unmountOnBlur: true,
-        headerShown: false,
-        // headerStyle: {
-        //   backgroundColor: colors.tabBarBackground,
-        // },
-        // headerTitleStyle: {
-        //   color: colors.tabBarLabel,
-        // },
-        // headerTitleAlign: 'center',
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: theme.headerBackground,
+        },
+        headerTitleStyle: {
+          color: theme.headerText,
+        },
+        headerTitleAlign: 'center',
         tabBarStyle: {
           backgroundColor: theme.tabBarBackground,
         },

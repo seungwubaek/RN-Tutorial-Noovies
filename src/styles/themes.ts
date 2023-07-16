@@ -4,6 +4,8 @@ import { DefaultTheme } from "styled-components/native";
 
 export const darkTheme: DefaultTheme = {
   mode: 'dark',
+  headerBackground: '#2d3436',
+  headerText: 'white',
   tabBarBackground: '#2d3436',
   tabBarLabel: '#fdcb6e',
   tabBarLabelInactive: '#b2bec3',
@@ -17,7 +19,9 @@ export const darkTheme: DefaultTheme = {
 
 export const lightTheme: DefaultTheme = {
   mode: 'light',
-  tabBarBackground: '#fff',
+  headerBackground: '#ffffff',
+  headerText: 'white',
+  tabBarBackground: '#ffffff',
   tabBarLabel: '#2d3436',
   tabBarLabelInactive: '#b2bec3',
   mainBackground: 'white',
