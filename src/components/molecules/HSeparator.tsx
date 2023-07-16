@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
 
-export const HSeperator = styled.View`
+export const HSeparator = styled.View`
   width: 20px;
 `;

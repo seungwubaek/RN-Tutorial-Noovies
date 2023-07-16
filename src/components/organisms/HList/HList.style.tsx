@@ -1,18 +1,4 @@
-import {
-  FlatList,
-} from 'react-native';
 import styled from 'styled-components/native';
-
-export const Loader = styled.View`
-  flex: 1;
-  justify-content: center;
-`;
-
-export const StyledScrollView = styled.ScrollView`
-  flex: 1;
-`;
-
-export const StFlatListContainer = styled.FlatList`` as typeof FlatList;
 
 export const ListContainer = styled.View`
   margin-bottom: 40px;

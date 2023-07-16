@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const StViewHMovie = styled.View`
-  padding: 0px 30px;
+  padding: 0px 20px;
   flex-direction: row;
 `;
 
