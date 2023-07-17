@@ -1,10 +1,14 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+// Components
 import Tabs from './Tabs';
 import Stack from './Stack';
 
-const Nav = createNativeStackNavigator();
+// Types
+import { RootStackParamList } from '~/types/react-navigation';
+
+const Nav = createNativeStackNavigator<RootStackParamList>();
 
 const Root = () => {
   return (

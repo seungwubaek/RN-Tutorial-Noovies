@@ -18,12 +18,12 @@ import movieApi from '~/apis/movie';
 import { ListTitle, StFlatListContainer } from './Movies.style';
 
 // Types
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { TabScreenProps } from '~/types/react-navigation';
 import { Movie, MovieResponse } from '~/apis/response';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { navigate } }) => {
+const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const queryClient = useQueryClient();
 

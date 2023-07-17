@@ -9,7 +9,10 @@ import HList from '~/components/organisms/HList';
 // Api
 import tvApi from '~/apis/tv';
 
-const Tv: React.FC = () => {
+// Types
+import { TabScreenProps } from '~/types/react-navigation';
+
+const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const queryClient = useQueryClient();
 

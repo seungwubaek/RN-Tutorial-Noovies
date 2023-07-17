@@ -9,7 +9,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { useTheme } from '~/hooks/theme';
 
-const Tab = createBottomTabNavigator();
+import { TabParamList } from '~/types/react-navigation';
+
+const Tab = createBottomTabNavigator<TabParamList>();
 
 const Tabs = () => {
   const { theme } = useTheme();
@@ -50,7 +52,7 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="TV"
+        name="Tv"
         component={Tv}
         options={{
           tabBarIcon: ({ focused, color, size }) => {
