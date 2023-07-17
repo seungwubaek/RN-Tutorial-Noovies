@@ -1,6 +1,4 @@
-import {
-  FlatList,
-} from 'react-native';
+import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Loader = styled.View`
@@ -19,7 +17,7 @@ export const ListContainer = styled.View`
 `;
 
 export const ListTitle = styled.Text`
-  color: ${({theme}) => theme.mainText};
+  color: ${({ theme }) => theme.mainText};
   font-size: 16px;
   font-weight: 600;
   margin-left: 20px;

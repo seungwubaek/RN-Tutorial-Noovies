@@ -24,25 +24,17 @@ import {
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
 interface SlideProps {
-  backdropPath: string
-  posterPath: string
-  originalTitle: string
-  voteAverage: number
-  overview: string
+  backdropPath: string;
+  posterPath: string;
+  originalTitle: string;
+  voteAverage: number;
+  overview: string;
 }
 
-const Slide: React.FC<SlideProps> = ({
-  backdropPath,
-  posterPath,
-  originalTitle,
-  voteAverage,
-  overview,
- }) => {
+const Slide: React.FC<SlideProps> = ({ backdropPath, posterPath, originalTitle, voteAverage, overview }) => {
   return (
     <SwiperItem>
-      <StImageBackground
-        source={{ uri: makeImgPath(backdropPath)}}
-      />
+      <StImageBackground source={{ uri: makeImgPath(backdropPath) }} />
       {/*
         `react-native-community/blur`는 blur 효과가 더 좋은 library이긴 하나,
         `expo start --dev-client` 명령어로만 작동하며
@@ -55,11 +47,7 @@ const Slide: React.FC<SlideProps> = ({
         blurAmount={10}
         style={StyleSheet.absoluteFill}
       /> */}
-      <BlurView
-        intensity={110}
-        tint='dark'
-        style={StyleSheet.absoluteFill}
-      />
+      <BlurView intensity={110} tint="dark" style={StyleSheet.absoluteFill} />
       <NowShowingContentWrapper>
         <Poster path={posterPath} />
         <NowShowingContentColumn>
@@ -69,7 +57,7 @@ const Slide: React.FC<SlideProps> = ({
         </NowShowingContentColumn>
       </NowShowingContentWrapper>
     </SwiperItem>
-  )
-}
+  );
+};
 
 export default Slide;

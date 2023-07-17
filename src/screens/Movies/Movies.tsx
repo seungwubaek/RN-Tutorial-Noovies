@@ -1,8 +1,5 @@
 import React, { useCallback } from 'react';
-import {
-  Dimensions,
-  ListRenderItem,
-} from 'react-native';
+import { Dimensions, ListRenderItem } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -18,10 +15,7 @@ import HList from '~/components/organisms/HList/HList';
 import movieApi from '~/apis/movie';
 
 // Styles
-import {
-  ListTitle,
-  StFlatListContainer,
-} from './Movies.style';
+import { ListTitle, StFlatListContainer } from './Movies.style';
 
 // Types
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
@@ -29,25 +23,24 @@ import { Movie, MovieResponse } from '~/apis/response';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { navigate }}) => {
+const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { navigate } }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const queryClient = useQueryClient();
 
-  const {
-    isLoading: nowPlayingLoading,
-    data: nowPlayingData,
-  } = useQuery<MovieResponse>(['movie', 'nowPlaying'], movieApi.getNowPlaying);
+  const { isLoading: nowPlayingLoading, data: nowPlayingData } = useQuery<MovieResponse>(
+    ['movie', 'nowPlaying'],
+    movieApi.getNowPlaying
+  );
 
-  const {
-    isLoading: upcomingLoading,
-    data: upcomingData,
-  } = useQuery<MovieResponse>(['movie', 'upcoming'], movieApi.getUpcoming);
+  const { isLoading: upcomingLoading, data: upcomingData } = useQuery<MovieResponse>(
+    ['movie', 'upcoming'],
+    movieApi.getUpcoming
+  );
 
-  const {
-    isLoading: trendingLoading,
-    data: trendingData,
-  } = useQuery<MovieResponse>(['movie', 'trending'], movieApi.getTrending);
-
+  const { isLoading: trendingLoading, data: trendingData } = useQuery<MovieResponse>(
+    ['movie', 'trending'],
+    movieApi.getTrending
+  );
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -55,14 +48,17 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
     setRefreshing(false);
   }, []);
 
-  const renderHMedia = useCallback<ListRenderItem<Movie>>(({ item }) => (
-    <HMedia
-      posterPath={item.poster_path}
-      originalTitle={item.original_title}
-      overview={item.overview}
-      releaseDate={item.release_date}
-    />
-  ), []);
+  const renderHMedia = useCallback<ListRenderItem<Movie>>(
+    ({ item }) => (
+      <HMedia
+        posterPath={item.poster_path}
+        originalTitle={item.original_title}
+        overview={item.overview}
+        releaseDate={item.release_date}
+      />
+    ),
+    []
+  );
 
   const movieKeyExtractor = useCallback((item: Movie) => item.id.toString(), []);
 
@@ -77,45 +73,41 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
       }}
       refreshing={refreshing}
       onRefresh={onRefresh}
-      ListHeaderComponent={() => <>
-        {
-          nowPlayingData ?
-          <SwiperFlatList
-            autoplay={true}
-            autoplayLoop={true}
-            autoplayDelay={3.5}
-            contentContainerStyle={{
-              height: HEIGHT/4,
-              marginBottom: 30,
-            }}
-            showPagination={false}
-            data={nowPlayingData.results}
-            keyExtractor={movieKeyExtractor}
-            renderItem={({ item }) => (
-              <Slide
-                backdropPath={item.backdrop_path}
-                posterPath={item.poster_path}
-                originalTitle={item.original_title}
-                voteAverage={item.vote_average}
-                overview={item.overview}
-              />
-            )}
-          />
-          : null
-        }
-        {
-          trendingData ?
-            <HList title="Trending Movies" data={trendingData.results} />
-          : null
-        }
-        <ListTitle>Coming Soon</ListTitle>
-      </>}
+      ListHeaderComponent={() => (
+        <>
+          {nowPlayingData ? (
+            <SwiperFlatList
+              autoplay={true}
+              autoplayLoop={true}
+              autoplayDelay={3.5}
+              contentContainerStyle={{
+                height: HEIGHT / 4,
+                marginBottom: 30,
+              }}
+              showPagination={false}
+              data={nowPlayingData.results}
+              keyExtractor={movieKeyExtractor}
+              renderItem={({ item }) => (
+                <Slide
+                  backdropPath={item.backdrop_path}
+                  posterPath={item.poster_path}
+                  originalTitle={item.original_title}
+                  voteAverage={item.vote_average}
+                  overview={item.overview}
+                />
+              )}
+            />
+          ) : null}
+          {trendingData ? <HList title="Trending Movies" data={trendingData.results} /> : null}
+          <ListTitle>Coming Soon</ListTitle>
+        </>
+      )}
       ItemSeparatorComponent={VSeparator}
       data={upcomingData?.results || []}
       keyExtractor={movieKeyExtractor}
       renderItem={renderHMedia}
     />
-  )
-}
+  );
+};
 
 export default Movies;

@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -9,24 +9,24 @@ const ScreenOne = ({ navigation: { navigate } }) => {
     <TouchableOpacity onPress={() => navigate('Two')}>
       <Text>go to two</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const ScreenTwo = ({ navigation: { navigate } }) => {
   return (
     <TouchableOpacity onPress={() => navigate('Three')}>
       <Text>go to three</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const ScreenThree = ({ navigation: { navigate } }) => {
   return (
     <TouchableOpacity onPress={() => navigate('Tabs', { screen: 'Search' })}>
       <Text>go to Search Tab</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const Stack = () => {
   return (
@@ -40,6 +40,6 @@ const Stack = () => {
       <NativeStack.Screen name="Three" component={ScreenThree} />
     </NativeStack.Navigator>
   );
-}
+};
 
 export default Stack;

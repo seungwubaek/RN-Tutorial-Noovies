@@ -13,13 +13,13 @@ export const StViewHColumn = styled.View`
 
 export const StTextOverview = styled.Text`
   flex: 1;
-  color: ${({theme}) => theme.subText};
+  color: ${({ theme }) => theme.subText};
   /* opacity: 0.8;
   width: 80%; */
 `;
 
 export const StTextRelease = styled.Text`
-  color: ${({theme}) => theme.subText};
+  color: ${({ theme }) => theme.subText};
   font-size: 12px;
   margin-vertical: 10px;
   /* color: white;

@@ -19,9 +19,7 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
   const [fontsLoaded] = Font.useFonts(Ionicons.font);
-  const [assets, error] = useAssets([
-    'https://avatars.githubusercontent.com/u/22609242?v=4',
-  ]);
+  const [assets, error] = useAssets(['https://avatars.githubusercontent.com/u/22609242?v=4']);
 
   useEffect(() => {
     if (fontsLoaded && assets) {
@@ -44,13 +42,13 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={darkTheme}>
-      <NavigationContainer>
-        <View onLayout={onLayoutRootView} style={{flex: 1}}>
-          <Root />
-        </View>
-      </NavigationContainer>
-    </ThemeProvider>
+      <ThemeProvider theme={darkTheme}>
+        <NavigationContainer>
+          <View onLayout={onLayoutRootView} style={{ flex: 1 }}>
+            <Root />
+          </View>
+        </NavigationContainer>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

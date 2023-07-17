@@ -28,7 +28,7 @@ export const NowShowingContentColumn = styled.View`
 
 export const NowShowingText = styled.Text`
   color: white;
-`
+`;
 
 export const NowShowingTitle = styled(NowShowingText)`
   font-size: 18px;
@@ -36,8 +36,8 @@ export const NowShowingTitle = styled(NowShowingText)`
 `;
 
 export const NowShowingTextContent = styled(NowShowingText)`
-  color: rgba(255, 255, 255, .75);
-`
+  color: rgba(255, 255, 255, 0.75);
+`;
 
 export const NowShowingOverView = styled(NowShowingTextContent)`
   margin-top: 10px;

@@ -12,7 +12,7 @@ const Loader = () => {
     <Wrapper>
       <ActivityIndicator />
     </Wrapper>
-  )
-}
+  );
+};
 
 export default Loader;

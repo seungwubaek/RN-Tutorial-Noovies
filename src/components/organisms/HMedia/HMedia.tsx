@@ -5,12 +5,7 @@ import Votes from '~/components/molecules/Votes';
 
 import { StTextMoviePosterTitle } from '~/components/molecules/Poster/Poster.style';
 
-import {
-  StTextOverview,
-  StTextRelease,
-  StViewHColumn,
-  StViewHMovie
-} from './HMedia.style';
+import { StTextOverview, StTextRelease, StViewHColumn, StViewHMovie } from './HMedia.style';
 
 interface HMediaProps {
   posterPath: string | null;
@@ -20,23 +15,13 @@ interface HMediaProps {
   voteAverage?: number;
 }
 
-const HMedia: React.FC<HMediaProps> = ({
-  posterPath,
-  originalTitle,
-  overview,
-  releaseDate,
-  voteAverage,
-}) => {
+const HMedia: React.FC<HMediaProps> = ({ posterPath, originalTitle, overview, releaseDate, voteAverage }) => {
   return (
     <StViewHMovie>
       <Poster path={posterPath} />
       <StViewHColumn>
-        <StTextMoviePosterTitle
-          posterWidth={false}
-        >
-          {originalTitle.length > 30
-            ? `${originalTitle.slice(0, 30)}...`
-            : originalTitle}
+        <StTextMoviePosterTitle posterWidth={false}>
+          {originalTitle.length > 30 ? `${originalTitle.slice(0, 30)}...` : originalTitle}
         </StTextMoviePosterTitle>
         {releaseDate ? (
           <StTextRelease>

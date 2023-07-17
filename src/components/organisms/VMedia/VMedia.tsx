@@ -15,17 +15,10 @@ interface VMediaProps {
   voteAverage: number;
 }
 
-const VMedia: React.FC<VMediaProps> = ({
-  posterPath,
-  originalTitle,
-  voteAverage,
-}) => (
+const VMedia: React.FC<VMediaProps> = ({ posterPath, originalTitle, voteAverage }) => (
   <Movie>
     <Poster path={posterPath} />
-    <StTextMoviePosterTitle
-      numberOfLines={1}
-      posterWidth={true}
-    >
+    <StTextMoviePosterTitle numberOfLines={1} posterWidth={true}>
       {originalTitle}
     </StTextMoviePosterTitle>
     <Votes voteAverage={voteAverage} />

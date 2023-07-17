@@ -12,11 +12,12 @@ const Root = () => {
       screenOptions={{
         headerShown: false,
         animation: 'slide_from_right',
-      }}>
+      }}
+    >
       <Nav.Screen name="Tabs" component={Tabs} />
       <Nav.Screen name="Stack" component={Stack} />
     </Nav.Navigator>
-  )
-}
+  );
+};
 
 export default Root;

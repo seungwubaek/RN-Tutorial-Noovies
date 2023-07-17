@@ -1,6 +1,6 @@
 // it's from https://flatuicolors.com/palette/us
 
-import { DefaultTheme } from "styled-components/native";
+import { DefaultTheme } from 'styled-components/native';
 
 export const darkTheme: DefaultTheme = {
   mode: 'dark',
@@ -15,7 +15,7 @@ export const darkTheme: DefaultTheme = {
   testColor1: 'red',
   testColor2: 'blue',
   testColor3: 'green',
-}
+};
 
 export const lightTheme: DefaultTheme = {
   mode: 'light',
@@ -30,6 +30,6 @@ export const lightTheme: DefaultTheme = {
   testColor1: 'red',
   testColor2: 'blue',
   testColor3: 'green',
-}
+};
 
 export default darkTheme;
