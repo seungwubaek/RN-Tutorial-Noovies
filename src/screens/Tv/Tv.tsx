@@ -13,28 +13,28 @@ import HList from '~/components/organisms/HList';
 import tvApi from '~/apis/tv';
 
 const Tv: React.FC = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const queryClient = useQueryClient();
 
   const {
     isLoading: todayLoading,
     data: todayData,
-    isRefetching: todayRefetching,
   } = useQuery(['tv', 'today'], tvApi.getAiringToday);
 
   const {
     isLoading: topLoading,
     data: topData,
-    isRefetching: topRefetching,
   } = useQuery(['tv', 'top'], tvApi.getTopRated);
 
   const {
     isLoading: trendingLoading,
     data: trendingData,
-    isRefetching: trendingRefetching,
   } = useQuery(['tv', 'trending'], tvApi.getTrending);
 
-  const onRefresh = useCallback(() => {
-    queryClient.refetchQueries(['tv']);
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await queryClient.refetchQueries(['tv']);
+    setRefreshing(false);
   }, []);
 
   const loading = todayLoading || topLoading || trendingLoading;
@@ -42,9 +42,6 @@ const Tv: React.FC = () => {
   if (loading) {
     return <Loader />
   }
-
-  const refreshing = todayRefetching || topRefetching || trendingRefetching;
-
 
   return (
     <ScrollView

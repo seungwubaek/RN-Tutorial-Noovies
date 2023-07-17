@@ -30,35 +30,29 @@ import { Movie, MovieResponse } from '~/apis/response';
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
 const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { navigate }}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const queryClient = useQueryClient();
 
   const {
     isLoading: nowPlayingLoading,
     data: nowPlayingData,
-    refetch: refetchNowPlaying,
-    isRefetching: isRefetchingNowPlaying,
   } = useQuery<MovieResponse>(['movie', 'nowPlaying'], movieApi.getNowPlaying);
 
   const {
     isLoading: upcomingLoading,
     data: upcomingData,
-    refetch: refetchUpcoming,
-    isRefetching: isRefetchingUpcoming,
   } = useQuery<MovieResponse>(['movie', 'upcoming'], movieApi.getUpcoming);
 
   const {
     isLoading: trendingLoading,
     data: trendingData,
-    refetch: refetchTrending,
-    isRefetching: isRefetchingTrending,
   } = useQuery<MovieResponse>(['movie', 'trending'], movieApi.getTrending);
 
 
   const onRefresh = useCallback(async () => {
-    // refetchNowPlaying();
-    // refetchUpcoming();
-    // refetchTrending();
-    queryClient.refetchQueries(['movie']);
+    setRefreshing(true);
+    await queryClient.refetchQueries(['movie']);
+    setRefreshing(false);
   }, []);
 
   const renderHMedia = useCallback<ListRenderItem<Movie>>(({ item }) => (
@@ -73,7 +67,6 @@ const Movies: React.FC<BottomTabScreenProps<any, 'Movies'>> = ({ navigation: { n
   const movieKeyExtractor = useCallback((item: Movie) => item.id.toString(), []);
 
   const loading = nowPlayingLoading || upcomingLoading || trendingLoading;
-  const refreshing = isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending;
 
   return loading ? (
     <Loader />
