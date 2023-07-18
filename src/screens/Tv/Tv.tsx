@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
-import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
+import { InfiniteData, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 
 // Components
 import Loader from '~/components/organisms/Loader';
@@ -16,6 +16,34 @@ const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const queryClient = useQueryClient();
 
+  const selectFn = useCallback(
+    (data: InfiniteData<{ page: number; results: any[]; total_pages: number; total_results: number }>) => {
+      let tmpDataKeys: Array<number> = [];
+      const tmpData: any = {
+        pageParams: data.pageParams,
+        pages: [],
+      };
+      data.pages.forEach((page) => {
+        const filteredActualData = page.results.filter((item) => {
+          if (tmpDataKeys.includes(item.id)) {
+            return false;
+          } else {
+            tmpDataKeys.push(item.id);
+            return true;
+          }
+        });
+        tmpData.pages.push({
+          page: page.page,
+          results: filteredActualData,
+          total_pages: page.total_pages,
+          total_results: page.total_results,
+        });
+      });
+      return tmpData;
+    },
+    []
+  );
+
   const {
     isLoading: todayLoading,
     data: todayData,
@@ -26,6 +54,7 @@ const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
       const nextPage = currentPage.page + 1;
       return nextPage > currentPage.total_pages ? null : nextPage;
     },
+    select: selectFn,
   });
 
   const {
@@ -38,6 +67,7 @@ const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
       const nextPage = currentPage.page + 1;
       return nextPage > currentPage.total_pages ? null : nextPage;
     },
+    select: selectFn,
   });
 
   const {
@@ -50,6 +80,7 @@ const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
       const nextPage = currentPage.page + 1;
       return nextPage > currentPage.total_pages ? null : nextPage;
     },
+    select: selectFn,
   });
 
   const onRefresh = useCallback(async () => {
