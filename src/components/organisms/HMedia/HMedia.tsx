@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -59,4 +59,4 @@ const HMedia: React.FC<HMediaProps> = ({ posterPath, originalTitle, overview, re
   );
 };
 
-export default HMedia;
+export default memo(HMedia);

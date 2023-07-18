@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
@@ -49,4 +49,4 @@ const VMedia: React.FC<VMediaProps> = ({ posterPath, originalTitle, voteAverage,
   );
 };
 
-export default VMedia;
+export default memo(VMedia);

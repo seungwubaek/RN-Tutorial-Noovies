@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Dimensions, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
@@ -78,4 +78,4 @@ const Slide: React.FC<SlideProps> = ({ backdropPath, posterPath, originalTitle, 
   );
 };
 
-export default Slide;
+export default memo(Slide);
