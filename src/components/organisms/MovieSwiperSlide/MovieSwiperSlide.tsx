@@ -20,6 +20,9 @@ import {
   NowShowingVotes,
 } from './MovieSwiperSlide.style';
 
+// Api
+import { Movie as modelMovie, Tv as modelTv } from '~/types/api';
+
 // Types
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
@@ -30,14 +33,18 @@ interface SlideProps {
   originalTitle: string;
   voteAverage: number;
   overview: string;
+  fullData: modelMovie | modelTv;
 }
 
-const Slide: React.FC<SlideProps> = ({ backdropPath, posterPath, originalTitle, voteAverage, overview }) => {
+const Slide: React.FC<SlideProps> = ({ backdropPath, posterPath, originalTitle, voteAverage, overview, fullData }) => {
   const navigation = useNavigation();
   const goToDetail = useCallback(() => {
     //@ts-ignore
     navigation.navigate('Stack', {
       screen: 'Detail',
+      params: {
+        ...fullData,
+      },
     });
   }, [navigation]);
 

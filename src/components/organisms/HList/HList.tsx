@@ -8,9 +8,12 @@ import VMedia from '~/components/organisms/VMedia';
 // Styles
 import { ListContainer, ListTitle } from './HList.style';
 
+// Types
+import { Movie, Tv } from '~/types/api';
+
 interface HListProps {
   title: string;
-  data: any[];
+  data: Array<(Movie & { original_name?: string }) | (Tv & { original_title?: string })>;
 }
 
 const HList: React.FC<HListProps> = ({ title, data }) => {
@@ -31,6 +34,7 @@ const HList: React.FC<HListProps> = ({ title, data }) => {
             posterPath={item.poster_path}
             originalTitle={item.original_title ?? item.original_name}
             voteAverage={item.vote_average}
+            fullData={item}
           />
         )}
       />

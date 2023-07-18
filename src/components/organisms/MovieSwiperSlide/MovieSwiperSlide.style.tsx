@@ -27,7 +27,7 @@ export const NowShowingContentColumn = styled.View`
 `;
 
 export const NowShowingText = styled.Text`
-  color: white;
+  color: ${({ theme }) => theme.mainText};
 `;
 
 export const NowShowingTitle = styled(NowShowingText)`
@@ -36,7 +36,7 @@ export const NowShowingTitle = styled(NowShowingText)`
 `;
 
 export const NowShowingTextContent = styled(NowShowingText)`
-  color: rgba(255, 255, 255, 0.75);
+  color: ${({ theme }) => theme.subText};
 `;
 
 export const NowShowingOverView = styled(NowShowingTextContent)`

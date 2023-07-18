@@ -19,7 +19,7 @@ import { ListTitle, StFlatListContainer } from './Movies.style';
 
 // Types
 import { TabScreenProps } from '~/types/react-navigation';
-import { Movie, MovieResponse } from '~/apis/response';
+import { Movie, MovieResponse } from '~/types/api';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
@@ -55,6 +55,7 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
         originalTitle={item.original_title}
         overview={item.overview}
         releaseDate={item.release_date}
+        fullData={item}
       />
     ),
     []
@@ -94,6 +95,7 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
                   originalTitle={item.original_title}
                   voteAverage={item.vote_average}
                   overview={item.overview}
+                  fullData={item}
                 />
               )}
             />

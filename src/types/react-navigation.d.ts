@@ -2,6 +2,9 @@ import { BottomTabNavigationProp, BottomTabScreenProps } from '@react-navigation
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
+// Api
+import { Movie, Tv } from '~/types/api';
+
 // Navigation
 export type RootStackParamList = {
   Tabs: undefined;
@@ -25,7 +28,7 @@ export type TabScreenProps<T extends keyof TabParamList> = BottomTabScreenProps<
 
 // Navigation - Stack
 export type StackParamList = {
-  Detail: undefined;
+  Detail: Movie | Tv;
 };
 
 export type StackScreenProps<T extends keyof StackParamList> = NativeStackScreenProps<StackParamList, T>;
