@@ -21,8 +21,8 @@ const getTrending = async () => {
   }).then((resp) => resp.json());
 };
 
-const getUpcoming = async () => {
-  return fetch(`${BASE_URL}/movie/upcoming?language=ko-KR&page=1&region=KR&api_key=${API_KEY}`, {
+const getUpcoming = async ({ pageParam }: QueryFunctionContext) => {
+  return fetch(`${BASE_URL}/movie/upcoming?language=ko-KR&page=${pageParam}&region=KR&api_key=${API_KEY}`, {
     method: 'GET',
     headers: {
       accept: 'application/json',

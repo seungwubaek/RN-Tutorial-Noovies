@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { Dimensions, ListRenderItem } from 'react-native';
+import { Alert, Dimensions, ListRenderItem } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // Components
 import Loader from '~/components/organisms/Loader';
@@ -32,11 +32,17 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
     movieApi.getNowPlaying
   );
 
-  const { isLoading: upcomingLoading, data: upcomingData } = useQuery<MovieResponse>(
-    ['movie', 'upcoming'],
-    movieApi.getUpcoming
-  );
-
+  const {
+    isLoading: upcomingLoading,
+    data: upcomingData,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery<MovieResponse>(['movie', 'upcoming'], movieApi.getUpcoming, {
+    getNextPageParam: (currentPage) => {
+      const nextPage = currentPage.page + 1;
+      return nextPage > currentPage.total_pages ? null : nextPage;
+    },
+  });
   const { isLoading: trendingLoading, data: trendingData } = useQuery<MovieResponse>(
     ['movie', 'trending'],
     movieApi.getTrending
@@ -46,7 +52,13 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
     setRefreshing(true);
     await queryClient.refetchQueries(['movie']);
     setRefreshing(false);
-  }, []);
+  }, [queryClient]);
+
+  const loadMore = useCallback(() => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  }, [hasNextPage]);
 
   const renderHMedia = useCallback<ListRenderItem<Movie>>(
     ({ item }) => (
@@ -105,7 +117,9 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
         </>
       )}
       ItemSeparatorComponent={VSeparator}
-      data={upcomingData?.results || []}
+      data={upcomingData?.pages.map((page) => page.results).flat() || []}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.5}
       keyExtractor={movieKeyExtractor}
       renderItem={renderHMedia}
     />
