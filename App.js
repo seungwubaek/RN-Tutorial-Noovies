@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useAssets } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -44,6 +44,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={darkTheme}>
         <NavigationContainer>
+          <StatusBar backgroundColor={darkTheme.mainBackground} barStyle={'default'} />
           <View onLayout={onLayoutRootView} style={{ flex: 1 }}>
             <Root />
           </View>
