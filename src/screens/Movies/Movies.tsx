@@ -27,26 +27,41 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
   const [refreshing, setRefreshing] = React.useState(false);
   const queryClient = useQueryClient();
 
-  const { isLoading: nowPlayingLoading, data: nowPlayingData } = useQuery<MovieResponse>(
-    ['movie', 'nowPlaying'],
-    movieApi.getNowPlaying
-  );
+  const {
+    isLoading: nowPlayingLoading,
+    data: nowPlayingData,
+    hasNextPage: nowPlayingHasNextPage,
+    fetchNextPage: nowPlayingFetchNextPage,
+  } = useInfiniteQuery<MovieResponse>(['movie', 'nowPlaying'], movieApi.getNowPlaying, {
+    getNextPageParam: (currentPage) => {
+      const nextPage = currentPage.page + 1;
+      return nextPage > currentPage.total_pages ? null : nextPage;
+    },
+  });
 
   const {
     isLoading: upcomingLoading,
     data: upcomingData,
-    hasNextPage,
-    fetchNextPage,
+    hasNextPage: upcomingHasNextPage,
+    fetchNextPage: upcomingFetchNextPage,
   } = useInfiniteQuery<MovieResponse>(['movie', 'upcoming'], movieApi.getUpcoming, {
     getNextPageParam: (currentPage) => {
       const nextPage = currentPage.page + 1;
       return nextPage > currentPage.total_pages ? null : nextPage;
     },
   });
-  const { isLoading: trendingLoading, data: trendingData } = useQuery<MovieResponse>(
-    ['movie', 'trending'],
-    movieApi.getTrending
-  );
+
+  const {
+    isLoading: trendingLoading,
+    data: trendingData,
+    hasNextPage: trendingHasNextPage,
+    fetchNextPage: trendingFetchNextPage,
+  } = useInfiniteQuery<MovieResponse>(['movie', 'trending'], movieApi.getTrending, {
+    getNextPageParam: (currentPage) => {
+      const nextPage = currentPage.page + 1;
+      return nextPage > currentPage.total_pages ? null : nextPage;
+    },
+  });
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -54,11 +69,14 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
     setRefreshing(false);
   }, [queryClient]);
 
-  const loadMore = useCallback(() => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  }, [hasNextPage]);
+  const loadMoreData = useCallback(
+    ({ hasNextPage, fetchNextPage }: { hasNextPage?: boolean; fetchNextPage: () => void }) => {
+      if (hasNextPage) {
+        fetchNextPage();
+      }
+    },
+    []
+  );
 
   const renderHMedia = useCallback<ListRenderItem<Movie>>(
     ({ item }) => (
@@ -98,7 +116,11 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
                 marginBottom: 30,
               }}
               showPagination={false}
-              data={nowPlayingData.results}
+              data={nowPlayingData?.pages.map((page) => page.results).flat() || []}
+              onEndReached={() =>
+                loadMoreData({ hasNextPage: nowPlayingHasNextPage, fetchNextPage: nowPlayingFetchNextPage })
+              }
+              onEndReachedThreshold={0}
               keyExtractor={movieKeyExtractor}
               renderItem={({ item }) => (
                 <Slide
@@ -112,13 +134,21 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
               )}
             />
           ) : null}
-          {trendingData ? <HList title="Trending Movies" data={trendingData.results} /> : null}
+          {trendingData ? (
+            <HList
+              title="Trending Movies"
+              data={trendingData?.pages.map((page) => page.results).flat() || []}
+              loadMoreData={() =>
+                loadMoreData({ hasNextPage: trendingHasNextPage, fetchNextPage: trendingFetchNextPage })
+              }
+            />
+          ) : null}
           <ListTitle>Coming Soon</ListTitle>
         </>
       )}
       ItemSeparatorComponent={VSeparator}
       data={upcomingData?.pages.map((page) => page.results).flat() || []}
-      onEndReached={loadMore}
+      onEndReached={() => loadMoreData({ hasNextPage: upcomingHasNextPage, fetchNextPage: upcomingFetchNextPage })}
       onEndReachedThreshold={0.5}
       keyExtractor={movieKeyExtractor}
       renderItem={renderHMedia}

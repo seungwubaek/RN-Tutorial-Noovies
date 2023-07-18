@@ -3,8 +3,8 @@ import { API_KEY, BASE_URL } from '~/apis';
 // Types
 import { QueryFunctionContext } from '@tanstack/react-query';
 
-const getTrending = async () => {
-  return fetch(`${BASE_URL}/trending/tv/week?language=ko-KR&api_key=${API_KEY}`, {
+const getTrending = async ({ pageParam }: QueryFunctionContext) => {
+  return fetch(`${BASE_URL}/trending/tv/week?language=ko-KR&page=${pageParam ?? 1}&api_key=${API_KEY}`, {
     method: 'GET',
     headers: {
       accept: 'application/json',
@@ -12,8 +12,8 @@ const getTrending = async () => {
   }).then((resp) => resp.json());
 };
 
-const getAiringToday = async () => {
-  return fetch(`${BASE_URL}/tv/airing_today?language=ko-KR&page=1&api_key=${API_KEY}`, {
+const getAiringToday = async ({ pageParam }: QueryFunctionContext) => {
+  return fetch(`${BASE_URL}/tv/airing_today?language=ko-KR&page=${pageParam ?? 1}&api_key=${API_KEY}`, {
     method: 'GET',
     headers: {
       accept: 'application/json',
@@ -21,8 +21,8 @@ const getAiringToday = async () => {
   }).then((resp) => resp.json());
 };
 
-const getTopRated = async () => {
-  return fetch(`${BASE_URL}/tv/top_rated?language=ko-KR&page=1&api_key=${API_KEY}`, {
+const getTopRated = async ({ pageParam }: QueryFunctionContext) => {
+  return fetch(`${BASE_URL}/tv/top_rated?language=ko-KR&page=${pageParam ?? 1}&api_key=${API_KEY}`, {
     method: 'GET',
     headers: {
       accept: 'application/json',

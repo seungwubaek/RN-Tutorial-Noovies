@@ -14,9 +14,10 @@ import { Movie, Tv } from '~/types/api';
 interface HListProps {
   title: string;
   data: Array<(Movie & { original_name?: string }) | (Tv & { original_title?: string })>;
+  loadMoreData: () => void;
 }
 
-const HList: React.FC<HListProps> = ({ title, data }) => {
+const HList: React.FC<HListProps> = ({ title, data, loadMoreData }) => {
   return (
     <ListContainer>
       <ListTitle>{title}</ListTitle>
@@ -28,6 +29,8 @@ const HList: React.FC<HListProps> = ({ title, data }) => {
         }}
         ItemSeparatorComponent={HListSeparator}
         data={data}
+        onEndReached={loadMoreData}
+        onEndReachedThreshold={0.5}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <VMedia
