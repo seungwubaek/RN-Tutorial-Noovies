@@ -16,7 +16,7 @@ interface HListProps {
   data: Array<
     (Movie & { original_name?: string }) | (Tv & { original_title?: string })
   >;
-  loadMoreData: () => void;
+  loadMoreData?: () => void;
 }
 
 const HList: React.FC<HListProps> = ({ title, data, loadMoreData }) => {
