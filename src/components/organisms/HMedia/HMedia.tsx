@@ -11,7 +11,12 @@ import { Movie as modelMovie, Tv as modelTv } from '~/types/api';
 
 // Styles
 import { StTextMoviePosterTitle } from '~/components/molecules/Poster/Poster.style';
-import { StTextOverview, StTextRelease, StViewHColumn, StViewHMovie } from './HMedia.style';
+import {
+  StTextOverview,
+  StTextRelease,
+  StViewHColumn,
+  StViewHMovie,
+} from './HMedia.style';
 
 interface HMediaProps {
   posterPath: string | null;
@@ -22,7 +27,14 @@ interface HMediaProps {
   fullData: modelMovie | modelTv;
 }
 
-const HMedia: React.FC<HMediaProps> = ({ posterPath, originalTitle, overview, releaseDate, voteAverage, fullData }) => {
+const HMedia: React.FC<HMediaProps> = ({
+  posterPath,
+  originalTitle,
+  overview,
+  releaseDate,
+  voteAverage,
+  fullData,
+}) => {
   const navigation = useNavigation();
   const goToDetail = useCallback(() => {
     //@ts-ignore
@@ -40,7 +52,9 @@ const HMedia: React.FC<HMediaProps> = ({ posterPath, originalTitle, overview, re
         <Poster path={posterPath} />
         <StViewHColumn>
           <StTextMoviePosterTitle posterWidth={false}>
-            {originalTitle.length > 30 ? `${originalTitle.slice(0, 30)}...` : originalTitle}
+            {originalTitle.length > 30
+              ? `${originalTitle.slice(0, 30)}...`
+              : originalTitle}
           </StTextMoviePosterTitle>
           {releaseDate ? (
             <StTextRelease>

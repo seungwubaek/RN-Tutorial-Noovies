@@ -35,20 +35,32 @@ import {
   StBtnShare,
 } from './Detail.style';
 
-const ShareBtn: React.FC<{ isMovie: boolean; params: Movie | Tv; data: any }> = (props) => {
+const ShareBtn: React.FC<{
+  isMovie: boolean;
+  params: Movie | Tv;
+  data: any;
+}> = (props) => {
   const { isMovie, params, data } = props;
   const theme = useTheme();
   const openShare = useCallback(async () => {
-    const homepage = isMovie ? `https://www.imdb.com/title/${data.imdb_id}/` : data.homepage;
+    const homepage = isMovie
+      ? `https://www.imdb.com/title/${data.imdb_id}/`
+      : data.homepage;
 
     if (Platform.OS === 'android') {
       await Share.share({
-        title: 'original_title' in params ? params.original_title : params.original_name,
+        title:
+          'original_title' in params
+            ? params.original_title
+            : params.original_name,
         message: `${params.overview}\nCheck it out: ${homepage}`,
       });
     } else {
       await Share.share({
-        title: 'original_title' in params ? params.original_title : params.original_name,
+        title:
+          'original_title' in params
+            ? params.original_title
+            : params.original_name,
         url: homepage,
       });
     }
@@ -81,7 +93,9 @@ const Detail: React.FC<StackScreenProps<'Detail'>> = (props) => {
   useEffect(() => {
     if (data)
       setOptions({
-        headerRight: () => <ShareBtn isMovie={isMovie} params={params} data={data} />,
+        headerRight: () => (
+          <ShareBtn isMovie={isMovie} params={params} data={data} />
+        ),
       });
   }, [data]);
 
@@ -93,7 +107,8 @@ const Detail: React.FC<StackScreenProps<'Detail'>> = (props) => {
     // Method 2: open with in-app browser(?)
     let browserPackage: string | undefined;
     if (Platform.OS === 'android') {
-      const tabsSupportingBrowsers = await WebBrowser.getCustomTabsSupportingBrowsersAsync();
+      const tabsSupportingBrowsers =
+        await WebBrowser.getCustomTabsSupportingBrowsersAsync();
       browserPackage = tabsSupportingBrowsers?.defaultBrowserPackage;
     }
     await WebBrowser.openBrowserAsync(baseUrl, {
@@ -106,18 +121,31 @@ const Detail: React.FC<StackScreenProps<'Detail'>> = (props) => {
   return (
     <StScrollViewContainer>
       <StViewHeader>
-        <StImageBackground source={{ uri: makeImgPath(params.backdrop_path || '') }} style={StyleSheet.absoluteFill} />
-        <LinearGradient colors={['transparent', theme.mainBackground]} style={StyleSheet.absoluteFill} />
+        <StImageBackground
+          source={{ uri: makeImgPath(params.backdrop_path || '') }}
+          style={StyleSheet.absoluteFill}
+        />
+        <LinearGradient
+          colors={['transparent', theme.mainBackground]}
+          style={StyleSheet.absoluteFill}
+        />
         <StViewColumn>
           <Poster path={params.poster_path || ''} />
-          <StTextTitle>{'original_title' in params ? params.original_title : params.original_name}</StTextTitle>
+          <StTextTitle>
+            {'original_title' in params
+              ? params.original_title
+              : params.original_name}
+          </StTextTitle>
         </StViewColumn>
       </StViewHeader>
       <StViewData>
         <StTextOverview>{params.overview}</StTextOverview>
         {isLoading ? <Loader /> : null}
         {data?.videos?.results?.map((video: Video) => (
-          <StTouchableOpacityVideoBtn key={video.key} onPress={() => openYTLink(video.key)}>
+          <StTouchableOpacityVideoBtn
+            key={video.key}
+            onPress={() => openYTLink(video.key)}
+          >
             <Ionicons name="logo-youtube" size={24} color="white" />
             <StTextOfVideoBtn>{video.name}</StTextOfVideoBtn>
           </StTouchableOpacityVideoBtn>

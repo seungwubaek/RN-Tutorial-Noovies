@@ -1,6 +1,10 @@
 import React, { useCallback } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
-import { InfiniteData, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 // Components
 import Loader from '~/components/organisms/Loader';
@@ -17,7 +21,14 @@ const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
   const queryClient = useQueryClient();
 
   const selectFn = useCallback(
-    (data: InfiniteData<{ page: number; results: any[]; total_pages: number; total_results: number }>) => {
+    (
+      data: InfiniteData<{
+        page: number;
+        results: any[];
+        total_pages: number;
+        total_results: number;
+      }>
+    ) => {
       let tmpDataKeys: Array<number> = [];
       const tmpData: any = {
         pageParams: data.pageParams,
@@ -90,7 +101,13 @@ const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
   }, []);
 
   const loadMoreData = useCallback(
-    ({ hasNextPage, fetchNextPage }: { hasNextPage?: boolean; fetchNextPage: () => void }) => {
+    ({
+      hasNextPage,
+      fetchNextPage,
+    }: {
+      hasNextPage?: boolean;
+      fetchNextPage: () => void;
+    }) => {
       if (hasNextPage) {
         fetchNextPage();
       }
@@ -114,7 +131,9 @@ const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
 
   return (
     <ScrollView
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
       contentContainerStyle={{
         paddingVertical: 20,
       }}
@@ -122,17 +141,32 @@ const Tv: React.FC<TabScreenProps<'Tv'>> = () => {
       <HList
         title="Trending"
         data={trendingData?.pages.map((page) => page.results).flat() || []}
-        loadMoreData={() => loadMoreData({ hasNextPage: trendingHasNextPage, fetchNextPage: trendingFetchNextPage })}
+        loadMoreData={() =>
+          loadMoreData({
+            hasNextPage: trendingHasNextPage,
+            fetchNextPage: trendingFetchNextPage,
+          })
+        }
       />
       <HList
         title="Airing Today"
         data={todayData?.pages.map((page) => page.results).flat() || []}
-        loadMoreData={() => loadMoreData({ hasNextPage: todayHasNextPage, fetchNextPage: todayFetchNextPage })}
+        loadMoreData={() =>
+          loadMoreData({
+            hasNextPage: todayHasNextPage,
+            fetchNextPage: todayFetchNextPage,
+          })
+        }
       />
       <HList
         title="Top Rated"
         data={topData?.pages.map((page) => page.results).flat() || []}
-        loadMoreData={() => loadMoreData({ hasNextPage: topHasNextPage, fetchNextPage: topFetchNextPage })}
+        loadMoreData={() =>
+          loadMoreData({
+            hasNextPage: topHasNextPage,
+            fetchNextPage: topFetchNextPage,
+          })
+        }
       />
     </ScrollView>
   );

@@ -24,7 +24,12 @@ interface VMediaProps {
   fullData: modelMovie | modelTv;
 }
 
-const VMedia: React.FC<VMediaProps> = ({ posterPath, originalTitle, voteAverage, fullData }) => {
+const VMedia: React.FC<VMediaProps> = ({
+  posterPath,
+  originalTitle,
+  voteAverage,
+  fullData,
+}) => {
   const navigation = useNavigation();
   const goToDetail = useCallback(() => {
     //@ts-ignore

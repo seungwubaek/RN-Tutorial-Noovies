@@ -65,8 +65,12 @@ const Search: React.FC<TabScreenProps<'Search'>> = () => {
         onSubmitEditing={onSubmit}
       />
       {searchMoviesInitialLoading || searchTvInitialLoading ? <Loader /> : null}
-      {searchMoviesData ? <HList title="Movie Results" data={searchMoviesData.results} /> : null}
-      {searchTvData ? <HList title="TV Results" data={searchTvData.results} /> : null}
+      {searchMoviesData ? (
+        <HList title="Movie Results" data={searchMoviesData.results} />
+      ) : null}
+      {searchTvData ? (
+        <HList title="TV Results" data={searchTvData.results} />
+      ) : null}
     </StViewContainer>
   );
 };

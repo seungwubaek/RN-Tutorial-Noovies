@@ -7,7 +7,9 @@ interface VotesProps {
 }
 
 const Votes: React.FC<VotesProps> = ({ voteAverage }) => (
-  <StVoteText posterWidth={true}>{voteAverage > 0 ? `⭐️ ${voteAverage}/10` : `Coming soon`}</StVoteText>
+  <StVoteText posterWidth={true}>
+    {voteAverage > 0 ? `⭐️ ${voteAverage}/10` : `Coming soon`}
+  </StVoteText>
 );
 
 export default Votes;

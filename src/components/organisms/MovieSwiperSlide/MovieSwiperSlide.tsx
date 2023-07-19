@@ -36,7 +36,14 @@ interface SlideProps {
   fullData: modelMovie | modelTv;
 }
 
-const Slide: React.FC<SlideProps> = ({ backdropPath, posterPath, originalTitle, voteAverage, overview, fullData }) => {
+const Slide: React.FC<SlideProps> = ({
+  backdropPath,
+  posterPath,
+  originalTitle,
+  voteAverage,
+  overview,
+  fullData,
+}) => {
   const navigation = useNavigation();
   const goToDetail = useCallback(() => {
     //@ts-ignore
@@ -69,7 +76,9 @@ const Slide: React.FC<SlideProps> = ({ backdropPath, posterPath, originalTitle, 
           <Poster path={posterPath} />
           <NowShowingContentColumn>
             <NowShowingTitle>{originalTitle}</NowShowingTitle>
-            {voteAverage > 0 ? <NowShowingVotes>⭐ {voteAverage}/10</NowShowingVotes> : null}
+            {voteAverage > 0 ? (
+              <NowShowingVotes>⭐ {voteAverage}/10</NowShowingVotes>
+            ) : null}
             <NowShowingOverView>{overview.slice(0, 90)}...</NowShowingOverView>
           </NowShowingContentColumn>
         </NowShowingContentWrapper>

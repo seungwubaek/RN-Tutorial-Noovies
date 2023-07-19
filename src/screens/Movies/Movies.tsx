@@ -1,7 +1,11 @@
 import React, { useCallback } from 'react';
 import { Alert, Dimensions, ListRenderItem } from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
-import { InfiniteData, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 // Components
 import Loader from '~/components/organisms/Loader';
@@ -23,12 +27,21 @@ import { Movie, MovieResponse } from '~/types/api';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
-const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }) => {
+const Movies: React.FC<TabScreenProps<'Movies'>> = ({
+  navigation: { navigate },
+}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const queryClient = useQueryClient();
 
   const selectFn = useCallback(
-    (data: InfiniteData<{ page: number; results: any[]; total_pages: number; total_results: number }>) => {
+    (
+      data: InfiniteData<{
+        page: number;
+        results: any[];
+        total_pages: number;
+        total_results: number;
+      }>
+    ) => {
       let tmpDataKeys: Array<number> = [];
       const tmpData: any = {
         pageParams: data.pageParams,
@@ -60,39 +73,51 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
     data: nowPlayingData,
     hasNextPage: nowPlayingHasNextPage,
     fetchNextPage: nowPlayingFetchNextPage,
-  } = useInfiniteQuery<MovieResponse>(['movie', 'nowPlaying'], movieApi.getNowPlaying, {
-    getNextPageParam: (currentPage) => {
-      const nextPage = currentPage.page + 1;
-      return nextPage > currentPage.total_pages ? null : nextPage;
-    },
-    select: selectFn,
-  });
+  } = useInfiniteQuery<MovieResponse>(
+    ['movie', 'nowPlaying'],
+    movieApi.getNowPlaying,
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.page + 1;
+        return nextPage > currentPage.total_pages ? null : nextPage;
+      },
+      select: selectFn,
+    }
+  );
 
   const {
     isLoading: upcomingLoading,
     data: upcomingData,
     hasNextPage: upcomingHasNextPage,
     fetchNextPage: upcomingFetchNextPage,
-  } = useInfiniteQuery<MovieResponse>(['movie', 'upcoming'], movieApi.getUpcoming, {
-    getNextPageParam: (currentPage) => {
-      const nextPage = currentPage.page + 1;
-      return nextPage > currentPage.total_pages ? null : nextPage;
-    },
-    select: selectFn,
-  });
+  } = useInfiniteQuery<MovieResponse>(
+    ['movie', 'upcoming'],
+    movieApi.getUpcoming,
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.page + 1;
+        return nextPage > currentPage.total_pages ? null : nextPage;
+      },
+      select: selectFn,
+    }
+  );
 
   const {
     isLoading: trendingLoading,
     data: trendingData,
     hasNextPage: trendingHasNextPage,
     fetchNextPage: trendingFetchNextPage,
-  } = useInfiniteQuery<MovieResponse>(['movie', 'trending'], movieApi.getTrending, {
-    getNextPageParam: (currentPage) => {
-      const nextPage = currentPage.page + 1;
-      return nextPage > currentPage.total_pages ? null : nextPage;
-    },
-    select: selectFn,
-  });
+  } = useInfiniteQuery<MovieResponse>(
+    ['movie', 'trending'],
+    movieApi.getTrending,
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.page + 1;
+        return nextPage > currentPage.total_pages ? null : nextPage;
+      },
+      select: selectFn,
+    }
+  );
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -101,7 +126,13 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
   }, [queryClient]);
 
   const loadMoreData = useCallback(
-    ({ hasNextPage, fetchNextPage }: { hasNextPage?: boolean; fetchNextPage: () => void }) => {
+    ({
+      hasNextPage,
+      fetchNextPage,
+    }: {
+      hasNextPage?: boolean;
+      fetchNextPage: () => void;
+    }) => {
       if (hasNextPage) {
         fetchNextPage();
       }
@@ -122,7 +153,10 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
     []
   );
 
-  const movieKeyExtractor = useCallback((item: Movie) => item.id.toString(), []);
+  const movieKeyExtractor = useCallback(
+    (item: Movie) => item.id.toString(),
+    []
+  );
 
   const loading = nowPlayingLoading || upcomingLoading || trendingLoading;
 
@@ -147,9 +181,14 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
                 marginBottom: 30,
               }}
               showPagination={false}
-              data={nowPlayingData?.pages.map((page) => page.results).flat() || []}
+              data={
+                nowPlayingData?.pages.map((page) => page.results).flat() || []
+              }
               onEndReached={() =>
-                loadMoreData({ hasNextPage: nowPlayingHasNextPage, fetchNextPage: nowPlayingFetchNextPage })
+                loadMoreData({
+                  hasNextPage: nowPlayingHasNextPage,
+                  fetchNextPage: nowPlayingFetchNextPage,
+                })
               }
               onEndReachedThreshold={0}
               keyExtractor={movieKeyExtractor}
@@ -168,9 +207,14 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
           {trendingData ? (
             <HList
               title="Trending Movies"
-              data={trendingData?.pages.map((page) => page.results).flat() || []}
+              data={
+                trendingData?.pages.map((page) => page.results).flat() || []
+              }
               loadMoreData={() =>
-                loadMoreData({ hasNextPage: trendingHasNextPage, fetchNextPage: trendingFetchNextPage })
+                loadMoreData({
+                  hasNextPage: trendingHasNextPage,
+                  fetchNextPage: trendingFetchNextPage,
+                })
               }
             />
           ) : null}
@@ -179,7 +223,12 @@ const Movies: React.FC<TabScreenProps<'Movies'>> = ({ navigation: { navigate } }
       )}
       ItemSeparatorComponent={VSeparator}
       data={upcomingData?.pages.map((page) => page.results).flat() || []}
-      onEndReached={() => loadMoreData({ hasNextPage: upcomingHasNextPage, fetchNextPage: upcomingFetchNextPage })}
+      onEndReached={() =>
+        loadMoreData({
+          hasNextPage: upcomingHasNextPage,
+          fetchNextPage: upcomingFetchNextPage,
+        })
+      }
       onEndReachedThreshold={0.5}
       keyExtractor={movieKeyExtractor}
       renderItem={renderHMedia}

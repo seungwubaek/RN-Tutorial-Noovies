@@ -13,7 +13,9 @@ import { Movie, Tv } from '~/types/api';
 
 interface HListProps {
   title: string;
-  data: Array<(Movie & { original_name?: string }) | (Tv & { original_title?: string })>;
+  data: Array<
+    (Movie & { original_name?: string }) | (Tv & { original_title?: string })
+  >;
   loadMoreData: () => void;
 }
 
