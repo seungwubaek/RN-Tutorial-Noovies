@@ -49,7 +49,7 @@ npm install --save-dev babel-plugin-module-resolver
 3. Add `babel.config.js`
 
 ```js
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
@@ -101,3 +101,40 @@ module.exports = function(api) {
     }
   }
   ```
+
+## Topics
+
+## 개발 환경
+
+* `jsconfig.json`, `tsconfig.json`, `babel.config.js`
+  * path alias
+  * intellisense
+  * typescript
+
+### Typescript in RN
+
+* React Native에서 Typescript 사용하기
+  * 세팅하기 참조 <https://reactnative.dev/docs/typescript>
+
+* `interface` 및 `type`
+  * `number`, `string`, `boolean`, `object`, `array`
+  * `function`
+  * 서로 다른 2개의 `object`의 `Array`가 모두 올 수 있는 `property`
+    * `Movie`와 `Tv`
+  * 특정한 경우에만 `type` 수정
+    * `Movie`에서는 `original_title` 이지만 `Tv`에서는 `original_name`
+
+* Styled Component
+* React Navigation
+
+### Splash Screen
+
+`App.js`의 `onLayoutRootView` 참고
+
+### Navigation
+
+[React Navigation](https://reactnavigation.org/docs/getting-started)을 이용하여 Stack Navigation 안에 Nested Navigators Tab & Stack 구현
+
+### Infinite Scroll
+
+`FlatList`와 React Query의 `useQuery`, `useInfinityQuery`를 이용하여 API 호출
